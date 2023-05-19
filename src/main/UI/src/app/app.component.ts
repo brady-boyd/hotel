@@ -15,6 +15,9 @@ import {map} from "rxjs/operators";
 })
 export class AppComponent implements OnInit{
 
+  englishWelcomeMessage$!: Observable<string>;
+  frenchWelcomeMessage$!: Observable<string>;
+
   constructor(private httpClient:HttpClient){}
 
   private baseURL:string='http://localhost:8080';
@@ -29,6 +32,11 @@ export class AppComponent implements OnInit{
   currentCheckOutVal!:string;
 
     ngOnInit(){
+
+      this.englishWelcomeMessage$ = this.httpClient.get(this.baseURL + '/welcome?lang=en-US', { responseType: 'text' });
+      this.frenchWelcomeMessage$ = this.httpClient.get(this.baseURL + '/welcome?lang=fr-CA', { responseType: 'text' });
+
+
       this.roomsearch= new FormGroup({
         checkin: new FormControl(' '),
         checkout: new FormControl(' ')
@@ -46,15 +54,15 @@ export class AppComponent implements OnInit{
     });
   }
 
-    onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
-      this.getAll().subscribe(
+  onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
+    this.getAll().subscribe(
 
-        rooms => {console.log(Object.values(rooms)[0]);this.rooms=<Room[]>Object.values(rooms)[0]; }
+      rooms => {console.log(Object.values(rooms)[0]);this.rooms=<Room[]>Object.values(rooms)[0]; }
 
 
-      );
-    }
-    reserveRoom(value:string){
+    );
+  }
+  reserveRoom(value:string){
       this.request = new ReserveRoomRequest(value, this.currentCheckInVal, this.currentCheckOutVal);
 
       this.createReservation(this.request);
@@ -99,8 +107,9 @@ export interface Room{
   id:string;
   roomNumber:string;
   price:string;
+  priceCAD:string;
+  priceEUR:string;
   links:string;
-
 }
 export class ReserveRoomRequest {
   roomId:string;
@@ -121,21 +130,21 @@ export class ReserveRoomRequest {
 var ROOMS: Room[]=[
   {
   "id": "13932123",
-  "roomNumber" : "409",
+  "roomNumber" : "405",
   "price" :"20",
   "links" : ""
 },
 {
   "id": "139324444",
-  "roomNumber" : "509",
+  "roomNumber" : "406",
   "price" :"30",
   "links" : ""
 },
 {
   "id": "139324888",
-  "roomNumber" : "609",
+  "roomNumber" : "407",
   "price" :"40",
   "links" : ""
 }
-] */
+]*/
 

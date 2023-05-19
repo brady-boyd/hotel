@@ -22,8 +22,11 @@
 <main id="wrapper">
   <div class="scene" id="welcome">
     <article class="content">
+      <div>
+        <h2>{{ englishWelcomeMessage$ | async }}</h2>
+        <h2>{{ frenchWelcomeMessage$ | async }}</h2>
+      </div>
 
- 
 
       <div class="row">
         <div class=""col-12>
@@ -58,7 +61,7 @@
               </div>
               </form>
 
-        
+
         </div>
       </div>
 
@@ -75,7 +78,7 @@
                 </td>
                 <td>
                   <strong>Room #: {{room.roomNumber}}</strong><br/>
-                  <strong>Price: ${{room.price}}</strong>
+                  <strong>Price: ${{room.price}}</strong><br/>
                 </td>
                 <td>
                   <button type="submit" class="btn btn-primary" (click)="reserveRoom(room.id)">Reserve</button>
