@@ -54,13 +54,14 @@ export class AppComponent implements OnInit{
     });
   }
 
-  onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
-    this.getAll().subscribe(
-
-      rooms => {console.log(Object.values(rooms)[0]);this.rooms=<Room[]>Object.values(rooms)[0]; }
-
-
-    );
+  onSubmit({ value, valid }: { value: Roomsearch; valid: boolean }) {
+    this.getAll().subscribe((rooms: unknown) => {
+      this.rooms = Object.values(rooms as Record<string, Room[]>)[0];
+      this.rooms.forEach((room) => {
+        room.priceCAD = (Number(room.price) * 1.3).toFixed(2); // Arbitrary conversion to CAD
+        room.priceEUR = (Number(room.price) * 0.9).toFixed(2); // Arbitrary conversion to EUR
+      });
+    });
   }
   reserveRoom(value:string){
       this.request = new ReserveRoomRequest(value, this.currentCheckInVal, this.currentCheckOutVal);
