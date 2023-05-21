@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {HttpClient, HttpResponse,HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from 'rxjs';
-import {map} from "rxjs/operators";
 
 
 
@@ -30,8 +29,11 @@ export class AppComponent implements OnInit{
   request!:ReserveRoomRequest;
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
+  convertedTimes: string = '';
 
     ngOnInit(){
+
+      this.fetchConvertedTimes();
 
       this.englishWelcomeMessage$ = this.httpClient.get(this.baseURL + '/welcome?lang=en-US', { responseType: 'text' });
       this.frenchWelcomeMessage$ = this.httpClient.get(this.baseURL + '/welcome?lang=fr-CA', { responseType: 'text' });
@@ -52,6 +54,16 @@ export class AppComponent implements OnInit{
       this.currentCheckInVal = x.checkin;
       this.currentCheckOutVal = x.checkout;
     });
+  }
+  fetchConvertedTimes() {
+    this.httpClient.get('http://localhost:8080/api/time/convert', {responseType: 'text'}).subscribe(
+      (res: string) => {
+        this.convertedTimes = res;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
   onSubmit({ value, valid }: { value: Roomsearch; valid: boolean }) {

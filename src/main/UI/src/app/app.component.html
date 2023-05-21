@@ -25,8 +25,7 @@
       <div>
         <h2>{{ englishWelcomeMessage$ | async }}</h2>
         <h2>{{ frenchWelcomeMessage$ | async }}</h2>
-      </div>
-
+      </div> <br/>
 
       <div class="row">
         <div class=""col-12>
@@ -64,7 +63,10 @@
 
         </div>
       </div>
-
+      <div>
+        <br/>  <p style="color:white; font-size:18px">Please join us for a live, online presenation on:<br/>May 31, 2023
+        <br/> at <br/> {{ convertedTimes }}!</p>
+      </div>
       <h1>Available Rooms</h1>
 
       <div class="row" *ngIf="rooms">

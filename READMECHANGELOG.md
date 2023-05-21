@@ -62,7 +62,7 @@ File: 'app.component.html'
 
 ### C2
 
-**Prompt**: Modify the front end to display the prise for a reservation in currency rates for USD, CAD, and EUR.
+**Prompt**: Modify the front end to display the price for a reservation in currency rates for USD, CAD, and EUR.
 
 File: 'app.component.ts'
 - Lines: 112-114
@@ -74,3 +74,66 @@ File: 'app.component.ts'
 -File: 'app.component.html'
 - Lines 81-83
   - Change: Added HTML elements to display priceCAD and priceEUR.
+
+### C3
+
+**Prompt**: Write a Java method to convert times between eastern time (ET), mountain time (MT), 
+            and coordinated universal time (UTC) zones.
+
+File: 'TimeConversion.java'
+- Lines 1-7
+  - Change: Package and import statements.
+- Lines 9-10
+  - Change: Class declaration and CORS annotation.
+- Line 12
+  - Change: Declared private static variable named formatter of type DateTimeFormatter that is initialized with HH:mm.
+- Line 14
+  - Change: Delcared convertTimeToAllZones() method.
+- Line 15
+  - Change: Declared the variable currentTime which is the time to be converted into ET, MT, and UTC.
+- Line 16
+  -  Change: Declared currentZonedDateTime of type ZonedDateTime which takes currentTime and parses as 
+             a ZonedDateTime object with currentTime's time zone.
+- Lines 18-20
+  - Change: Declared ZoneId variables for ET, MT, and UTC named etZone, mtZone, and utcZone respectively.
+- Lines 22-24
+  - Change: Declared ZonedDateTime variables for ET, MT, and UTC that are initialized with currentZonedDateTime
+            converted to the respective time zones using .withZoneSameInstant.
+- Lines 26-28
+  - Change: Used the previously defined formatter to convert the ZonedDateTime variables to strings.
+- Lines 30-32
+  - Change: Returned the converted times as a string.
+
+File: 'TimeConversionController.java'
+- Lines 1-3
+    - Change: Package and import statements.
+- Lines 5-6
+  - Change: RestController and RequestMapping annotations to provide /api/time endpoint.
+- Line 7-8
+  - Change: CORS annotation and class declaration.
+- Line 10
+  - Change: GetMapping annotation added to provide /api/time/convert endpoint.
+- Lines 11-14
+  - Change: Defined convertTimeZones() method to return the converted times as a string.
+
+### C3b
+
+**Prompt**: Use the time zone conversion method from part C3a to display a message stating the time 
+            in all three times zones in hours and minutes for an online, live presentation held at 
+            the Landon Hotel. The times should be displayed as ET, MT, and UTC.
+
+File: 'app.component.ts'
+- Line 32
+  - Change: Declared and initialized empty string named convertedTimes.
+- Lines 58-62
+  - Change: Declared fetchConvertedTimed() method and defined it to send GET request to /api/time/convert
+            and assign the response to convertedTimes.
+- Line 37
+  - Change: Calls fetchConvertedTimes() method inside NgOnInit() method.
+- Lines 64-68
+  - Change: Logs any errors to the console and closes the method.
+
+-File: 'app.component.html'
+- Lines 63-67
+  - Change: Created a div that adds a message about the live online presentation and displays the time for the
+            presentation in ET, MT, and UTC by calling convertedTimes that was fetched in app.component.ts.
