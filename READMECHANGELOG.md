@@ -123,9 +123,9 @@ File: 'TimeConversionController.java'
             the Landon Hotel. The times should be displayed as ET, MT, and UTC.
 
 File: 'app.component.ts'
-- Line 32
+- Line 33
   - Change: Declared and initialized empty string named convertedTimes.
-- Lines 58-62
+- Lines 59-63
   - Change: Declared fetchConvertedTimed() method and defined it to send GET request to /api/time/convert
             and assign the response to convertedTimes.
 - Line 37
@@ -134,6 +134,42 @@ File: 'app.component.ts'
   - Change: Logs any errors to the console and closes the method.
 
 -File: 'app.component.html'
-- Lines 63-67
+- Lines 66-69
   - Change: Created a div that adds a message about the live online presentation and displays the time for the
             presentation in ET, MT, and UTC by calling convertedTimes that was fetched in app.component.ts.
+
+## Section D
+
+### D1
+
+**Prompt**: Build the Dockerfile to create a single image that includes all code, including modifications 
+            made in parts C1 to C3. Commit and push the final Dockerfile to GitLab.
+
+File: 'Dockerfile'
+- Line 1
+    -Change: Start with a base image containing Java runtime
+- Line 5
+    -Change: Copied the JAR file I packaged with maven to the Docker image.
+- Line 8
+  - Change: Set the working directory of the app inside the Docker image.
+- Line 11
+  - Change: Made app accessible to port 8080 to the host machine.
+- Line 14
+  - Change: Runs the application.
+
+### D2 
+
+**Prompt**: Test the Dockerfile by doing the following:
+
+•   Create a Docker image of the current multithreaded Spring application.
+
+•   Run the Docker image in a container and give the container a name that includes D387_[student ID].
+
+•   Submit a screenshot capture of the running application with evidence it is running in the container.
+
+File: 'Dockerfile'
+- Line 1
+  - Change: Ran docker build --no-cache -t d387_010912370_pa . to build Docker image from Dockerfile.
+- Line 2
+  - Change: Ran docker run -p 8080:8080 -d --name D387_010912370_PA d387_010912370_pa to run Docker image in a container
+            that I named D387_010912370_PA.
