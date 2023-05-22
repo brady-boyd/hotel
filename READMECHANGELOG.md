@@ -173,3 +173,16 @@ File: 'Dockerfile'
 - Line 2
   - Change: Ran docker run -p 8080:8080 -d --name D387_010912370_PA d387_010912370_pa to run Docker image in a container
             that I named D387_010912370_PA.
+
+### D3
+
+**Prompt**: Describe how you would deploy the current multithreaded Spring application to the cloud. 
+            Include the name of the cloud service provider you would use.
+
+   I would deploy the Landon Hotel application using Amazon Web Services. First, I would push the Docker image to
+an Amazon Elastic Container Registry repository. I would then use AWS Fargate, a serverless solution, to run the Docker
+image. I would use AWS Fargate because it allows me to run containers without having to provision/manage servers. I would
+set up a load balancer on the AWS Fargate instance to distribute traffic evenly across the containers. After that, I 
+would configure a Security Group, the built-in virtual firewall for AWS to customize the traffic limits and other network
+security options. Finally, I would  monitor the application using Amazon CloudWatch for metrics and insights and Amazon
+CloudTrail for logging.
