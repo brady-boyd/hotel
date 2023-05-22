@@ -186,3 +186,8 @@ set up a load balancer on the AWS Fargate instance to distribute traffic evenly 
 would configure a Security Group, the built-in virtual firewall for AWS to customize the traffic limits and other network
 security options. Finally, I would  monitor the application using Amazon CloudWatch for metrics and insights and Amazon
 CloudTrail for logging.
+
+## Post-Instructions Commit Note for Evaluator
+Files: Something about index.html and main.8182ae3c29cf9ac6.js have changed and continuously show up in my commit panel.
+Out of fear that leaving them out of the commit will prevent all the files from being in GitLab, I'm including them in
+this final commit
