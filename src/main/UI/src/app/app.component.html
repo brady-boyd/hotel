@@ -22,8 +22,10 @@
 <main id="wrapper">
   <div class="scene" id="welcome">
     <article class="content">
-
- 
+      <div>
+        <h2>{{ englishWelcomeMessage$ | async }}</h2>
+        <h2>{{ frenchWelcomeMessage$ | async }}</h2>
+      </div> <br/>
 
       <div class="row">
         <div class=""col-12>
@@ -58,10 +60,13 @@
               </div>
               </form>
 
-        
+
         </div>
       </div>
-
+      <div>
+        <br/>  <p style="color:white; font-size:18px">Please join us for a live, online presenation on:<br/>May 31, 2023
+        <br/> at <br/> {{ convertedTimes }}!</p>
+      </div>
       <h1>Available Rooms</h1>
 
       <div class="row" *ngIf="rooms">
@@ -75,7 +80,9 @@
                 </td>
                 <td>
                   <strong>Room #: {{room.roomNumber}}</strong><br/>
-                  <strong>Price: ${{room.price}}</strong>
+                  <strong>Price: ${{room.price}}</strong><br/>
+                  <strong>Price: C${{room.priceCAD}}</strong><br/>
+                  <strong>Price: €{{room.priceEUR}}</strong>
                 </td>
                 <td>
                   <button type="submit" class="btn btn-primary" (click)="reserveRoom(room.id)">Reserve</button>

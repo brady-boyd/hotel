@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {HttpClient, HttpResponse,HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from 'rxjs';
-import {map} from "rxjs/operators";
 
 
 
@@ -14,6 +13,9 @@ import {map} from "rxjs/operators";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+
+  englishWelcomeMessage$!: Observable<string>;
+  frenchWelcomeMessage$!: Observable<string>;
 
   constructor(private httpClient:HttpClient){}
 
@@ -27,8 +29,16 @@ export class AppComponent implements OnInit{
   request!:ReserveRoomRequest;
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
+  convertedTimes: string = '';
 
     ngOnInit(){
+
+      this.fetchConvertedTimes();
+
+      this.englishWelcomeMessage$ = this.httpClient.get(this.baseURL + '/welcome?lang=en-US', { responseType: 'text' });
+      this.frenchWelcomeMessage$ = this.httpClient.get(this.baseURL + '/welcome?lang=fr-CA', { responseType: 'text' });
+
+
       this.roomsearch= new FormGroup({
         checkin: new FormControl(' '),
         checkout: new FormControl(' ')
@@ -45,16 +55,27 @@ export class AppComponent implements OnInit{
       this.currentCheckOutVal = x.checkout;
     });
   }
+  fetchConvertedTimes() {
+    this.httpClient.get('http://localhost:8080/api/time/convert', {responseType: 'text'}).subscribe(
+      (res: string) => {
+        this.convertedTimes = res;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
 
-    onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
-      this.getAll().subscribe(
-
-        rooms => {console.log(Object.values(rooms)[0]);this.rooms=<Room[]>Object.values(rooms)[0]; }
-
-
-      );
-    }
-    reserveRoom(value:string){
+  onSubmit({ value, valid }: { value: Roomsearch; valid: boolean }) {
+    this.getAll().subscribe((rooms: unknown) => {
+      this.rooms = Object.values(rooms as Record<string, Room[]>)[0];
+      this.rooms.forEach((room) => {
+        room.priceCAD = (Number(room.price) * 1.3).toFixed(2); // Arbitrary conversion to CAD
+        room.priceEUR = (Number(room.price) * 0.9).toFixed(2); // Arbitrary conversion to EUR
+      });
+    });
+  }
+  reserveRoom(value:string){
       this.request = new ReserveRoomRequest(value, this.currentCheckInVal, this.currentCheckOutVal);
 
       this.createReservation(this.request);
@@ -99,8 +120,9 @@ export interface Room{
   id:string;
   roomNumber:string;
   price:string;
+  priceCAD:string;
+  priceEUR:string;
   links:string;
-
 }
 export class ReserveRoomRequest {
   roomId:string;
@@ -121,21 +143,21 @@ export class ReserveRoomRequest {
 var ROOMS: Room[]=[
   {
   "id": "13932123",
-  "roomNumber" : "409",
+  "roomNumber" : "405",
   "price" :"20",
   "links" : ""
 },
 {
   "id": "139324444",
-  "roomNumber" : "509",
+  "roomNumber" : "406",
   "price" :"30",
   "links" : ""
 },
 {
   "id": "139324888",
-  "roomNumber" : "609",
+  "roomNumber" : "407",
   "price" :"40",
   "links" : ""
 }
-] */
+]*/
 
